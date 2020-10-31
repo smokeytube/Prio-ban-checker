@@ -1,6 +1,5 @@
-# Prio ban checker
+# Prio ban checker [![Github All Releases](https://img.shields.io/github/downloads/BGP0/Prio-ban-checker/total.svg)]()
  Checks if a player is banned from donate.2b2t.org
-[![Github All Releases](https://img.shields.io/github/downloads/BGP0/Prio-ban-checker/total.svg)]()
 
 ![picture of the multi](https://i.imgur.com/595WGOr.png)
 ![picture of the single](https://i.imgur.com/3OQhuw6.png)
