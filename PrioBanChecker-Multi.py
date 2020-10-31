@@ -25,7 +25,8 @@ def check(input):
         request = requests.request('POST', "https://donate.2b2t.org/category/738999", data=data, headers=headers)
         if 'banned' in request.text:
             print((f"{input} is currently banned").center(119))
-            open('checked_usernames.txt', 'a').write(input)
+            line = f'{input}\n'
+            open('checked_usernames.txt', 'a').write(line)
         else:
             print((f"{input} is not currently banned").center(119))
 
