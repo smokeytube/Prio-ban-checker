@@ -22,6 +22,7 @@ Banned = 0
 Unbanned = 0
 Finished = 0
 LastTotal = 0
+Limited = 0
 
 def random_line():
     return random.choice(lines)
@@ -29,6 +30,7 @@ def random_line():
 def check(input):
     global Banned
     global Unbanned
+    global Limited
     if len(input) < 3:
         print(f'\nUnable to find {input}')
     else:
@@ -46,9 +48,13 @@ def check(input):
         else:
             print((f"{input} is not currently banned").center(119))
             Unbanned += 1
+        if request.status_code != 200:
+            Limited += 1
+            print('IP has been rate limited', request.status_code)
 
 def start():
-    while 0 == 0:
+    global Limited
+    while Limited == 0:
         usernames = open('usernames.txt').read()
         if usernames == '':
             break
