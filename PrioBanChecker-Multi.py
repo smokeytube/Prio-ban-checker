@@ -63,6 +63,8 @@ def check(input):
         if request.status_code != 200:
             Limited += 1
             print('IP has been rate limited', request.status_code)
+            if UseProxies == 1:
+                open('proxies.txt', 'w').write(open('proxies.txt').read().replace(f'{proxy}',''))
 
 def start():
     global Limited
