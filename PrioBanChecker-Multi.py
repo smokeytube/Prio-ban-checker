@@ -23,7 +23,7 @@ LastTotal = 0
 Limited = 0
 proxies = []
 # Settings
-UseProxies = 0
+UseProxies = 1
 
 def random_line():
     return random.choice(open('usernames.txt').read().splitlines())
@@ -61,10 +61,11 @@ def check(input):
             print((f"{input} is not currently banned").center(119))
             Unbanned += 1
         if request.status_code != 200:
-            Limited += 1
             print('IP has been rate limited', request.status_code)
             if UseProxies == 1:
                 open('proxies.txt', 'w').write(open('proxies.txt').read().replace(f'{proxy}',''))
+            else:
+                Limited += 1
 
 def start():
     global Limited
