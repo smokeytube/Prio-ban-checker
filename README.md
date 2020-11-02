@@ -21,6 +21,7 @@ pip3 install requests
 ### Multi
 
 1. Make a list of usernames and put it in usernames.txt
-2. Run PrioBanChecker-Multi.py
-3. Wait for the program to finish checking
-4. Open checked_usernames.txt
+2. If using proxies, put a list off http proxies in proxies.txt
+3. Run PrioBanChecker-Multi.py
+4. Wait for the program to finish checking
+5. Open checked_usernames.txt
