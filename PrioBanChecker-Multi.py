@@ -4,8 +4,6 @@ import random
 import time
 import ctypes
 
-lines = open('usernames.txt').read().splitlines()
-
 title = """
 ════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
  ██████╗ ██████╗ ██╗ ██████╗     ██████╗  █████╗ ███╗   ██╗     ██████╗██╗  ██╗███████╗ ██████╗██╗  ██╗███████╗██████╗ 
@@ -23,14 +21,22 @@ Unbanned = 0
 Finished = 0
 LastTotal = 0
 Limited = 0
+proxies = []
+# Settings
+UseProxies = 0
 
 def random_line():
-    return random.choice(lines)
+    return random.choice(open('usernames.txt').read().splitlines())
 
+def proxy():
+    with open('proxies.txt', 'r') as this_file:
+        for line in this_file:
+            proxies.append(line.replace('\n',''))
 def check(input):
     global Banned
     global Unbanned
     global Limited
+    global proxies
     if len(input) < 3:
         print(f'\nUnable to find {input}')
     else:
@@ -39,7 +45,13 @@ def check(input):
             'Content-Type': "application/x-www-form-urlencoded"
             }
 
-        request = requests.request('POST', "https://donate.2b2t.org/category/738999", data=data, headers=headers)
+        if UseProxies == 0:
+            request = requests.request('POST', "https://donate.2b2t.org/category/738999", data=data, headers=headers)
+        else:
+            proxy = {
+                'http': f'http://{random.choice(proxies)}'
+            }
+            request = requests.request('POST', "https://donate.2b2t.org/category/738999", data=data, headers=headers, proxies=proxy)
         if 'banned' in request.text:
             print((f"{input} is currently banned").center(119))
             line = f'{input}\n'
@@ -74,11 +86,19 @@ def name():
 
 print(title)
 print(('By BGP#0419\n'.center(119)))
+if UseProxies == 1:
+    print('You are using proxies. Change UseProxies to 0 to turn it off.')
+elif UseProxies == 0:
+    print('You are not using proxies. Change UseProxies to 1 to turn it on.')
+else:
+    print('Error loading proxy config. UseProxies must be "0" or "1".')
 
 threads = []
+
 open('checked_usernames.txt', 'w').write('')
 numberofthreads = int(input('Enter amount of threads: '))
 print('Loading threads...')
+proxy()
 threading.Thread(target=name).start()
 for i in range(numberofthreads):
     t = threading.Thread(target=start)
