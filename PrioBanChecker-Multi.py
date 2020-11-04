@@ -3,6 +3,7 @@ import threading
 import random
 import time
 import ctypes
+import asyncio
 
 title = """
 ════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
@@ -23,10 +24,11 @@ LastTotal = 0
 Limited = 0
 proxies = []
 # Settings
-UseProxies = 1
+UseProxies = 0
 
 def random_line():
-    return random.choice(open('usernames.txt').read().splitlines())
+    lines = open('usernames.txt').read().splitlines()
+    return random.choice(lines)
 
 def proxy():
     with open('proxies.txt', 'r') as this_file:
@@ -102,7 +104,8 @@ threads = []
 open('checked_usernames.txt', 'w').write('')
 numberofthreads = int(input('Enter amount of threads: '))
 print('Loading threads...')
-proxy()
+if UseProxies == 1:
+    proxy()
 threading.Thread(target=name).start()
 for i in range(numberofthreads):
     t = threading.Thread(target=start)
