@@ -22,38 +22,40 @@ Unbanned = 0
 Finished = 0
 LastTotal = 0
 Limited = 0
-proxies = []
 # Settings
-UseProxies = 0
+UseProxies = 1
+
+def random_proxy():
+    lines = open('proxies.txt').read().splitlines()
+    p = random.choice(lines)
+    return p
 
 def random_line():
     lines = open('usernames.txt').read().splitlines()
     return random.choice(lines)
 
-def proxy():
-    with open('proxies.txt', 'r') as this_file:
-        for line in this_file:
-            proxies.append(line.replace('\n',''))
 def check(input):
     global Banned
     global Unbanned
     global Limited
-    global proxies
     if len(input) < 3:
         print(f'\nUnable to find {input}')
     else:
         data = f'ign={input}'
         headers = {
             'Content-Type': "application/x-www-form-urlencoded"
-            }
+        }
 
         if UseProxies == 0:
             request = requests.request('POST', "https://donate.2b2t.org/category/738999", data=data, headers=headers)
         else:
             proxy = {
-                'http': f'http://{random.choice(proxies)}'
+                'https': f'{random_proxy()}'
             }
-            request = requests.request('POST', "https://donate.2b2t.org/category/738999", data=data, headers=headers, proxies=proxy)
+            try:
+                request = requests.request('POST', "https://donate.2b2t.org/category/738999", proxies=proxy, timeout=10, data=data, headers=headers)
+            except requests.exceptions.ProxyError:
+                request = requests.request('POST', "https://donate.2b2t.org/category/738999", proxies=proxy, timeout=10, data=data, headers=headers)
         if 'banned' in request.text:
             print((f"{input} is currently banned").center(119))
             line = f'{input}\n'
@@ -103,9 +105,9 @@ threads = []
 
 open('checked_usernames.txt', 'w').write('')
 numberofthreads = int(input('Enter amount of threads: '))
+
 print('Loading threads...')
-if UseProxies == 1:
-    proxy()
+
 threading.Thread(target=name).start()
 for i in range(numberofthreads):
     t = threading.Thread(target=start)
