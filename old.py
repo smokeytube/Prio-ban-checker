@@ -23,7 +23,7 @@ Finished = 0
 LastTotal = 0
 Limited = 0
 # Settings
-UseProxies = 1
+UseProxies = 0
 
 def random_proxy():
     lines = open('proxies.txt').read().splitlines()
