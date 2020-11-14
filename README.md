@@ -20,6 +20,8 @@ pip3 install requests
 
 ### Multi
 
+WARNING: Proxies don't really work because of cloudflare. Once one ip has been banned, other ips take much less time to be banned.
+
 1. Make a list of usernames and put it in usernames.txt
 2. If using proxies, put a list off http proxies in proxies.txt
 3. Run PrioBanChecker-Multi.py
