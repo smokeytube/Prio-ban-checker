@@ -1,10 +1,11 @@
 import requests
 from colorama import Fore, init
-import random
 import threading
-import time
-import ctypes
 
+lines = [item.replace("\n", "") for item in open('usernames.txt', 'r').readlines()]
+lines1 = lines[:len(lines)//2]
+lines2 = lines[len(lines)//2:]
+threads = []
 title = """
 ════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
  ██████╗ ██████╗ ██╗ ██████╗     ██████╗  █████╗ ███╗   ██╗     ██████╗██╗  ██╗███████╗ ██████╗██╗  ██╗███████╗██████╗ 
@@ -34,8 +35,24 @@ def check(input):
     else:
         print(Fore.LIGHTGREEN_EX + f"{input} is currently banned")
 
-print(Fore.LIGHTWHITE_EX + title)
-lines = [item.replace("\n", "") for item in open('usernames.txt', 'r').readlines()]
-for i in range(len(lines)):
-    check(lines[i])
+print(Fore.GREEN + title)
+
+def l1():
+    for i in range(len(lines1)):
+        check(lines1[i])
+def l2():
+    for i in range(len(lines2)):
+        check(lines2[i])
+
+t1 = threading.Thread(target=l1)
+t2 = threading.Thread(target=l2)
+threads.append(t1)
+threads.append(t2)
+t1.start()
+t2.start()
+
+print(('\nFinished loading all threads.\n').center(119))
+for x in threads:
+    x.join()
+
 input(Fore.RESET + 'Finished Checking!')
