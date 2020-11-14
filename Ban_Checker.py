@@ -2,6 +2,7 @@ import requests
 from colorama import Fore, init
 import threading
 
+init(convert=True)
 lines = [item.replace("\n", "") for item in open('usernames.txt', 'r').readlines()]
 lines1 = lines[:len(lines)//2]
 lines2 = lines[len(lines)//2:]
@@ -26,7 +27,9 @@ def check(input):
         }
 
     request = requests.request('POST', "https://donate.2b2t.org/category/738999", data=data, headers=headers)
-    if 'not a valid' in request.text:
+    if 'rate limited' in request.text:
+        print(Fore.LIGHTMAGENTA_EX + f"YOU'VE BEEN RATELIMITED!! :(")
+    elif 'not a valid' in request.text:
         print(Fore.LIGHTRED_EX + f"{input} is not a valid username")
     elif 'Unable' in request.text:
         print(Fore.LIGHTRED_EX + f"Unable to find a player with the username: {input}")
