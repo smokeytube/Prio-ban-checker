@@ -15,3 +15,10 @@ pip3 install colorama
 
 1. Make a list of usernames and put it in usernames.txt
 2. Run Ban_Checker.py
+
+## Fork Update
+
+Automated writing to username file, also can check
+unlimited amout of usernames without having to
+write names to the username file and re-running the
+program.
