@@ -1,7 +1,7 @@
 # Prio ban checker
  Checks if a player is banned from donate.2b2t.org
 
-![picture](https://i.imgur.com/VhdVI8R.png)
+![picture](https://imgur.com/a/XaITm5y.png)
 
 ## Installation
 
