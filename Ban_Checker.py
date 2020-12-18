@@ -1,7 +1,7 @@
 import requests
 from colorama import Fore, init
 import threading
-
+import sys
 
 title = """
 ════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
@@ -16,10 +16,16 @@ title = """
                                                     by BGP#0419
 """
 
-print(Fore.GREEN + title)
+def delete_last_line():
+    sys.stdout.write('\x1b[1A')
+    sys.stdout.write('\x1b[2K')
 
+
+print(Fore.GREEN + title)
+print(Fore.GREEN + "Username of 2b2t player: ")
 while True:
-    usern = input(Fore.GREEN + "Username of 2b2t player: ")
+    usern = input(Fore.GREEN)
+    delete_last_line()
     with open('usernames.txt', 'w') as usernamelist:
         usernamelist.write(usern)
 
@@ -40,13 +46,13 @@ while True:
         if 'rate limited' in request.text:
             print(Fore.LIGHTMAGENTA_EX + f"YOU'VE BEEN RATELIMITED!! :(")
         elif 'not a valid' in request.text:
-            print(Fore.LIGHTRED_EX + f"{input} is not a valid username")
+            print(Fore.YELLOW + f"{input} is not a valid username")
         elif 'Unable' in request.text:
-            print(Fore.LIGHTRED_EX + f"Unable to find a player with the username: {input}")
+            print(Fore.YELLOW + f"Unable to find a player with the username: {input}")
         elif 'banned' not in request.text:
-            print(Fore.LIGHTRED_EX + f"{input} is not currently banned")
+            print(Fore.BLUE + f"{input} is not currently banned")
         else:
-            print(Fore.LIGHTGREEN_EX + f"{input} is currently banned")
+            print(Fore.LIGHTRED_EX + f"{input} is currently banned")
 
 
     def l1():
